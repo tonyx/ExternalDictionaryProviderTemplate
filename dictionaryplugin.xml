@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dictionaryplugin" default="all">
+  
+  
+  <property file="dictionaryplugin.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <include name="**/?*.properties"/>
+    <include name="**/?*.xml"/>
+    <include name="**/?*.gif"/>
+    <include name="**/?*.png"/>
+    <include name="**/?*.jpeg"/>
+    <include name="**/?*.jpg"/>
+    <include name="**/?*.html"/>
+    <include name="**/?*.dtd"/>
+    <include name="**/?*.tld"/>
+    <include name="**/?*.ftl"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.6" value="${jdk.home.1.6}/bin"/>
+  <path id="jdk.classpath.1.6">
+    <fileset dir="${jdk.home.1.6}">
+      <include name="jre/lib/alt-rt.jar"/>
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.6}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.unnamed.classpath">
+    <pathelement location="${basedir}/lib/trans.jar"/>
+  </path>
+  
+  
+  <!-- Global Libraries -->
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module DictionaryPlugin -->
+  
+  <dirname property="module.dictionaryplugin.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.dictionaryplugin" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.dictionaryplugin" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.dictionaryplugin" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.dictionaryplugin" value="${compiler.args}"/>
+  
+  <property name="dictionaryplugin.output.dir" value="${module.dictionaryplugin.basedir}/out/production/DictionaryPlugin"/>
+  <property name="dictionaryplugin.testoutput.dir" value="${module.dictionaryplugin.basedir}/out/test/DictionaryPlugin"/>
+  
+  <path id="dictionaryplugin.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="dictionaryplugin.module.production.classpath">
+    <path refid="${module.jdk.classpath.dictionaryplugin}"/>
+    <path refid="library.unnamed.classpath"/>
+  </path>
+  
+  <path id="dictionaryplugin.runtime.production.module.classpath">
+    <pathelement location="${dictionaryplugin.output.dir}"/>
+    <path refid="library.unnamed.classpath"/>
+  </path>
+  
+  <path id="dictionaryplugin.module.classpath">
+    <path refid="${module.jdk.classpath.dictionaryplugin}"/>
+    <pathelement location="${dictionaryplugin.output.dir}"/>
+    <path refid="library.unnamed.classpath"/>
+  </path>
+  
+  <path id="dictionaryplugin.runtime.module.classpath">
+    <pathelement location="${dictionaryplugin.testoutput.dir}"/>
+    <pathelement location="${dictionaryplugin.output.dir}"/>
+    <path refid="library.unnamed.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.dictionaryplugin">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.dictionaryplugin">
+    <patternset refid="excluded.from.module.dictionaryplugin"/>
+  </patternset>
+  
+  <path id="dictionaryplugin.module.sourcepath">
+    <dirset dir="${module.dictionaryplugin.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.dictionaryplugin" depends="compile.module.dictionaryplugin.production,compile.module.dictionaryplugin.tests" description="Compile module DictionaryPlugin"/>
+  
+  <target name="compile.module.dictionaryplugin.production" description="Compile module DictionaryPlugin; production classes">
+    <mkdir dir="${dictionaryplugin.output.dir}"/>
+    <javac destdir="${dictionaryplugin.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.dictionaryplugin}/javac">
+      <compilerarg line="${compiler.args.dictionaryplugin}"/>
+      <bootclasspath refid="dictionaryplugin.module.bootclasspath"/>
+      <classpath refid="dictionaryplugin.module.production.classpath"/>
+      <src refid="dictionaryplugin.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.dictionaryplugin"/>
+    </javac>
+    
+    <copy todir="${dictionaryplugin.output.dir}">
+      <fileset dir="${module.dictionaryplugin.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+
+   <target name="createJar" >
+      <jar basedir="${module.dictionaryplugin.basedir}/out/production/dictionaryplugin" destfile="transplugin.jar" >
+      </jar>
+  </target>
+
+  <target name="compile.module.dictionaryplugin.tests" depends="compile.module.dictionaryplugin.production" description="compile module DictionaryPlugin; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.dictionaryplugin" description="cleanup module">
+    <delete dir="${dictionaryplugin.output.dir}"/>
+    <delete dir="${dictionaryplugin.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.dictionaryplugin" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.dictionaryplugin" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
