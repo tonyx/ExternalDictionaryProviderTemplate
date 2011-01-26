@@ -1,2 +1,17 @@
-template for plugin of an external implementation for "Translate" (https://github.com/tonyx/Translate)
+Template for plugin of an external implementation for "Translate" (https://github.com/tonyx/Translate)
+
+How to use it:
+Implement org.tonyxzt.language.ContentProvider to retrive the information
+and org.tonyxzt.language.ContentFilter to filter it.
+
+Compile, put in a .jar
+make it available in the classpath with all the jar needed by "translate"
+
+add to the conf/providers.txt the row:
+myDic,org.externalLangProvider.MyContentProvider,org.externalLangProvider.MyContentFilter
+
+(or what are your fully qualified path name for your classes)
+
+run
+java org.tonyxzt.language.Translator --dic=myDic --oriLang=.. --targetLang=... ....
 

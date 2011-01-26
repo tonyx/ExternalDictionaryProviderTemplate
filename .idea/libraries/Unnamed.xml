@@ -2,6 +2,9 @@
   <library name="Unnamed">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/trans.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/google-api-translate-java-0.94.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit-4.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/cltranslatorSNAPSHOT201101261308.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
