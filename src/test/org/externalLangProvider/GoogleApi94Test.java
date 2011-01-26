@@ -22,6 +22,7 @@ import java.util.Map;
  */
 public class GoogleApi94Test {
     Map<String,GenericDictionary> mapDictionaries;
+    InMemoryOutStream ios;
     Translator translator;
     @Before
     public void SetUp() {
@@ -31,6 +32,7 @@ public class GoogleApi94Test {
                }
         };
         translator = new Translator(mapDictionaries);
+        ios= new InMemoryOutStream();
     }
     @Before
     public void setUp() {
@@ -69,6 +71,64 @@ public class GoogleApi94Test {
         translator.doAction(new String[] {"--dic=myDic","--oriLang=it","--targetLang=en","ciao"});
         org.junit.Assert.assertTrue(ios.getContent().contains("hello"));
      }
+
+
+    @Test
+    public void shouldBeAbleToManageAnyInputStreamer() throws Exception {
+        translator.setOutStream(ios);
+        translator.wrapCommandLineParameters(new String[]{"--dic=myDic", "--oriLang=en", "--targetLang=fr", "hi"});
+
+        translator.doAction(new String[]{"--dic=myDic", "--oriLang=en", "--targetLang=fr", "hi"});
+
+        Assert.assertTrue(ios.getContent().contains("salut"));
+    }
+
+
+    @Test
+    public void canReadFromInputFileMultipleLines() throws Exception {
+        InputStream inputStream = new InputStream(){ boolean start = true; public String next() {if (start) { start=false; return "ciao";} else return null;}};
+        translator.wrapCommandLineParameters(new String[] {"--dic=myDic", "--oriLang=it","--targetLang=en","--inFile=infile"});
+        translator.setInputStream(inputStream);
+        translator.setOutStream(ios);
+
+        translator.doAction(new String[] {"--dic=myDic", "--oriLang=it","--targetLang=en","--inFile=infile"});
+
+        Assert.assertTrue(ios.getContent().contains("hello"));
+    }
+
+    @Test
+    public void canReadFromInputFile() throws Exception {
+        translator.wrapCommandLineParameters(new String[] {"--dic=myDic","--oriLang=en","--targetLang=it","--inFile=infile"});
+        InputStream inputStream = new InputStream(){ boolean start = true; public String next() {if (start) { start=false; return "hi";} else return null;}};
+        translator.setInputStream(inputStream);
+        translator.setOutStream(ios);
+
+        translator.doAction(new String[] {"--dic=myDic","--oriLang=en","--targetLang=it","--inFile=infile"});
+
+        Assert.assertTrue(ios.getContent().contains("ciao"));
+    }
+
+
+    @Test
+    public void manageOutputFile() throws Exception {
+        translator.wrapCommandLineParameters(new String[]  {"--dic=myDic","--oriLang=it","--targetLang=en","ciao"});
+        translator.setOutStream(ios);
+        translator.doAction(new String[]{"--dic=myDic", "--oriLang=it", "--targetLang=en", "ciao"});
+
+        Assert.assertTrue(ios.getContent().contains("hello"));
+    }
+
+
+    @Test
+    public void testCyrillic() throws Exception {
+        translator.wrapCommandLineParameters(new String[]{"--dic=myDic","--oriLang=en","--targetLang=ru","hi"});
+        translator.setOutStream(ios);
+        translator.doAction((new String[]{"--dic=myDic","--oriLang=en","--targetLang=ru","hi"}));
+
+        Assert.assertTrue(ios.getContent().contains("привет"));
+     }
+
 }
+
 
 
