@@ -173,7 +173,7 @@
        <tstamp>
          <format property="touch.time" pattern="yyyyMMDDhhmm"/>
        </tstamp>
-      <jar basedir="${module.dictionaryplugin.basedir}/out/production/dictionaryplugin" destfile="gapipluginSNAPSHOT${touch.time}.jar" >
+      <jar basedir="${module.dictionaryplugin.basedir}/out/production/dictionaryplugin" destfile="gapipluginSNAPSHOT.jar" >
       </jar>
   </target>
 

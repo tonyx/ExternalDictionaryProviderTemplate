@@ -1,14 +1,14 @@
 package test.org.externalLangProvider;
 
-import com.google.api.GoogleAPI;
-import com.google.api.translate.Language;
-import com.google.api.translate.Translate;
 import org.externalLangProvider.MyContentFilter;
 import org.externalLangProvider.MyContentProvider;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.tonyxzt.language.*;
+import org.tonyxzt.language.core.GenericDictionary;
+import org.tonyxzt.language.core.Translator;
+import org.tonyxzt.language.io.InMemoryOutStream;
+import org.tonyxzt.language.io.InputStream;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,34 +34,7 @@ public class GoogleApi94Test {
         translator = new Translator(mapDictionaries);
         ios= new InMemoryOutStream();
     }
-    @Before
-    public void setUp() {
-        //GoogleAPI.setHttpReferrer("http://code.google.com/p/google-api-translate-java/");
-    }
-    @Test
-    public void myTest() throws Exception {
-        Assert.assertEquals("ciao", Translate.execute("hi", Language.ENGLISH,Language.ITALIAN));
-    }
-    @Test
-    public void mySecondTest() throws Exception {
-        Assert.assertEquals("ciao", Translate.execute("hi", Language.fromString("en"),Language.fromString("it")));
-    }
 
-    @Test
-    public void myThirdTest() throws Exception {
-        Assert.assertEquals("ciao", Translate.execute("hi", Language.fromString("en"),Language.fromString("it")));
-    }
-
-    @Test
-    public void msdklf() throws Exception {
-        Assert.assertEquals("ora", Translate.execute("now", Language.fromString("en"),Language.fromString("it")));
-    }
-
-    @Test
-    public void asldfkjasldf() throws Exception {
-        GenericDictionary genericdic = new GenericDictionary("custom",new MyContentProvider(),new MyContentFilter());
-        Assert.assertEquals("Vai", genericdic.lookUp("go","en","it"));
-    }
 
     @Test
     public void orilanItalianTargetEnSayHi() throws Exception {
@@ -118,6 +91,14 @@ public class GoogleApi94Test {
         Assert.assertTrue(ios.getContent().contains("hello"));
     }
 
+    @Test
+    public void supportLanguagesContainsItalian() throws Exception {
+        translator.wrapCommandLineParameters(new String[]  {"--dic=myDic","--languages"});
+        translator.setOutStream(ios);
+        translator.doAction(new String[]{"--dic=myDic", "--languages"});
+
+        Assert.assertTrue(ios.getContent().contains("ITALIAN"));
+    }
 
     @Test
     public void testCyrillic() throws Exception {
@@ -127,6 +108,9 @@ public class GoogleApi94Test {
 
         Assert.assertTrue(ios.getContent().contains("привет"));
      }
+
+
+
 
 }
 

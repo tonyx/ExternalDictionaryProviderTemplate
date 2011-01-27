@@ -1,6 +1,7 @@
 package org.externalLangProvider;
 
-import org.tonyxzt.language.ContentFilter;
+
+import org.tonyxzt.language.core.ContentFilter;
 
 /**
  * Created by IntelliJ IDEA.

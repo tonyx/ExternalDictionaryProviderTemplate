@@ -1,10 +1,16 @@
-Template for plugin of an external implementation for "Translate"
+implementation of generic dictionary plugin for command line translator (https://github.com/tonyx/Translate)
+using google translator api
 
 How to use it:
 Implement org.tonyxzt.language.ContentProvider to retrive the information
 and org.tonyxzt.language.ContentFilter to filter it.
 
 Compile, put in a .jar
+
+open the command line translator project (https://github.com/tonyx/Translate)
+Edit the ant file:
+
+
 make it available in the classpath with all the jar needed by "translate"
 
 add to the conf/providers.txt (to "translate project" https://github.com/tonyx/Translate)) the row:
