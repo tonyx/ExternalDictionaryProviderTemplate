@@ -29,4 +29,8 @@ public class MyContentProvider implements ContentProvider {
         }
         return toReturn;
     }
+
+    public String getInfoUrl() {
+        return "http://http://translate.google.com";
+    }
 }

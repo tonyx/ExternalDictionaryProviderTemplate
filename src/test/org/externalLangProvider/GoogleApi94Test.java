@@ -9,6 +9,7 @@ import org.tonyxzt.language.core.GenericDictionary;
 import org.tonyxzt.language.core.Translator;
 import org.tonyxzt.language.io.InMemoryOutStream;
 import org.tonyxzt.language.io.InputStream;
+import org.tonyxzt.language.util.FakeBrowserActivator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,15 +25,17 @@ public class GoogleApi94Test {
     Map<String,GenericDictionary> mapDictionaries;
     InMemoryOutStream ios;
     Translator translator;
+    FakeBrowserActivator fakeBrowserActivator;
     @Before
     public void SetUp() {
+        ios= new InMemoryOutStream();
+        fakeBrowserActivator= new FakeBrowserActivator();
         mapDictionaries = new HashMap<String,GenericDictionary>(){
                {
                     put("myDic",new GenericDictionary("myDic",new MyContentProvider(),new MyContentFilter()));
                }
         };
-        translator = new Translator(mapDictionaries);
-        ios= new InMemoryOutStream();
+        translator = new Translator(mapDictionaries,fakeBrowserActivator,ios);
     }
 
 
