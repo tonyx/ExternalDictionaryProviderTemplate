@@ -4,6 +4,7 @@
       <root url="jar://$PROJECT_DIR$/lib/google-api-translate-java-0.94.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/junit-4.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/cltranslatorSNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mockito-all-1.8.5.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
